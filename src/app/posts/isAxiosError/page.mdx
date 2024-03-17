@@ -1,0 +1,40 @@
+import ArticleLayout from "@/components/ArticleLayout";
+
+export const article = {
+  author: "John Doe",
+  date: "2024-03-17",
+  title: "🐞 isAxiosError",
+  description:
+    "Axios interceptor 에러 핸들링 과정에서 response에 error 가 isAxiosError를 통해 axios를 통한 http 비동기 통신 과정에서 발생하는 에러를 나타내는 Boolean값인지를 확인하고 정리하는 글",
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## For What?
+
+Axios interceptor 에러 핸들링 과정에서 response에 error 가 isAxiosError를 통해 axios를 통한 http 비동기 통신 과정에서 발생하는 에러를 나타내는 Boolean값인지를 확인하고 정리하는 글
+
+## Result?
+
+[axios.js](https://github.com/axios/axios/blob/v1.4.0/dist/axios.js#L850) 코드 파헤쳐본 결과, axios.[isAxiosError](https://github.com/axios/axios/blob/v1.4.0/dist/axios.js#L2837C23-L2837C23) 함수는 `axios`에서 발생하는 오류가 `axios`에서 생성된 오류인지를 판단하는 데 사용되며, 이 함수는 주어진 오류가 `axios`에 의해 생성된 오류인지 아닌지를 boolean 값으로 반환
+
+```jsx
+/**
+ * Determines whether the payload is an error thrown by Axios
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+function isAxiosError(payload) {
+  return utils.isObject(payload) && payload.isAxiosError === true;
+}
+```
+
+```jsx
+// Expose isAxiosError
+axios.isAxiosError = isAxiosError;
+```
