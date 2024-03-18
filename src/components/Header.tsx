@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { Fragment } from "react";
-import profile from "@/img/profile.png";
+import logo from "@/img/logo.png";
 import Link from "next/link";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
@@ -129,8 +129,8 @@ const Header = () => {
     <header className="top-0 -mb-3 py-5 w-full mx-auto px-4 md:px-10 flex gap-10 justify-between items-center">
       <Link href={"/"}>
         <Image
-          src={profile}
-          alt="Profile logo"
+          src={logo}
+          alt="logo"
           className="w-12 h-12 rounded-full object-cover"
         />
       </Link>

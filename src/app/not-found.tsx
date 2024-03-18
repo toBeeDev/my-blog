@@ -8,14 +8,14 @@ const NotFound = () => {
           404
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-sky-800 sm:text-5xl">
-          Page not found
+          페이지를 찾지 못했습니다.
         </h1>
         <p className="mt-4 text-base text-sky-600 dark:text-sky-400">
-          Sorry, we couldn`t find the page you`re looking for.
+          죄송합니다. 원하시는 페이지를 찾지 못하였습니다.
         </p>
-        {/* <Button href='/' variant="secondary" className="mt-4">
-                    Go back home
-                </Button> */}
+        {/* <Button href="/" variant="secondary" className="mt-4">
+          Go back home
+        </Button> */}
       </div>
     </Container>
   );

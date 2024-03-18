@@ -3,7 +3,6 @@ import logoModu from "@/img/logos/modu.svg";
 import Image, { type ImageProps } from "next/image";
 import { FaBriefcase } from "react-icons/fa";
 import { Button } from "./Button";
-import { BsArrowDown } from "react-icons/bs";
 
 interface Role {
   company: string;
@@ -53,7 +52,7 @@ const Role = ({ role }: { role: Role }) => {
 const Resume = () => {
   let resume: Array<Role> = [
     {
-      company: "모두의주차장",
+      company: "모두의주차장(SOCAR)",
       title: "Frontend Developer",
       logo: logoModu,
       start: "2022",
