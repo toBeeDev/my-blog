@@ -1,0 +1,42 @@
+import ArticleLayout from "@/components/ArticleLayout";
+
+export const article = {
+  author: "Chan",
+  date: "2024-03-19",
+  title: "❓ Sum of two lowest positive integers",
+  description: `CodeWars - Sum of two lowest positive integers 알로리즘 풀이`,
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## Instructions
+
+## **Story**
+
+Create a function that returns the sum of the two lowest positive numbers given an array of minimum 4 positive integers. No floats or non-positive integers will be passed.
+
+For example, when an array is passed like [19, 5, 42, 2, 77], the output should be 7.
+
+[10, 343445353, 3453445, 3453545353453] should return 3453455.
+
+## Solution
+
+```tsx
+function sumTwoSmallestNumbers(numbers) {
+  const n = numbers.sort((a, b) => a - b);
+  return n[0] + n[1];
+}
+```
+
+- ## Best Practices
+  ```tsx
+  function sumTwoSmallestNumbers(numbers) {
+    var [a, b] = numbers.sort((a, b) => a - b);
+    return a + b;
+  }
+  ```
