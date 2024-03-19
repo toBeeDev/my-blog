@@ -1,0 +1,157 @@
+import ArticleLayout from "@/components/ArticleLayout";
+
+export const article = {
+  author: "Chan",
+  date: "2024-03-19",
+  title: "⚠️ Client Side Error Handling",
+  description: "Client Side Error Handling 에 대한 정리를 위한 글",
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+<aside>
+💡 Client Side Error Handling 에 대한 정리를 위한 글
+
+</aside>
+
+## Why?
+
+1차적으로 최근 RollBar를 통해 로깅 되는 에러에 대한 핸들링을 시작하게 되며, 개인적으로 공부를 위한 프로젝트 혹은 포트폴리오에 담았던 모든 코드에서는 에러가 발생하면 단지 `console.log`에 표출을 하거나 그냥 `throw new Error()` 를 통해 에러핸들링을 했었는데, 막상 production에 나가는 프로젝트를 진행하게 되니 에러로깅과 에러핸들링이 얼마나 중요한가에 대해 깨달을 수 있었고 이를 정리하고자 작성하게 되었다.
+
+## How?
+
+### Client Side (Feat. Axios)
+
+> Axios : 브라우저, Node.js를 위한 Promise API를 활용하는 HTTP 비동기 통신 라이브러리
+
+[Axios](https://axios-http.com/kr/docs/intro)를 활용하여 Client Side Component에서의 HTTP 비동기 통신을 진행하였고, 과정 속에서 각 status 에 따른 Error instance를 생성하고, 해당 instance는 AxiosError를 extends(확장) 하여 특정 요소들을 값으로 받아 사용할 수 있게 구성하였다.
+
+```tsx
+//ClientRequestError instance생성
+export class ClientRequestError extends AxiosError {
+  // @ts-expect-error AxiosError의 code는 string
+  code: number
+  withCredentials: boolean
+  timeout: number
+  readyState: number
+  status: number
+  statusText: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  response: any
+  responseText: string
+  responseURL: string
+  responseType: XMLHttpRequestResponseType
+  axiosResponse: AxiosResponse | undefined
+
+  constructor(message: string, code: number, response: AxiosResponse | undefined, request: XMLHttpRequest) {
+    super(message)
+    this.code = code
+    this.axiosResponse = response
+    this.withCredentials = request.withCredentials
+    this.timeout = request.timeout
+    this.readyState = request.readyState
+    this.status = request.status
+    this.statusText = request.statusText
+    this.response = request.response
+    this.responseText = request.responseText
+    this.responseURL = request.responseURL
+    this.responseType = request.responseType
+  }
+}
+...ServerRequestError
+export class NetworkRequestError extends AxiosError {
+	axiosResponse: AxiosResponse | undefined
+	constructor(message:string, response: AxiosResponse | undefined,request: XMLHttpRequest ){
+	super(message)
+	this.axiosResponse = response
+	this.response = request.response
+	this.request = request
+	}
+}
+...UnhandledRequestError
+////////
+```
+
+Axios Interceptor에서 특정 조건에 따라 Error Handling을 진행하는 로직을 구성하였다. 1차적으로 NetworkError, ServerError, ClientError, UnhandledError 로 Error를 구분지었고 이를 아래와 같이 활용하였다.
+
+```tsx
+//index.ts
+const handleNetworkError = (error: AxiosError<ErrorResData>) => {
+  //기존 로직
+  const errMsg = error.message ?? NETWORK_ERROR_MSG;
+  const clientRequestNetworkError = new NetworkError(
+    errMsg,
+    error.response,
+    error.request
+  );
+  return Promise.reject(networkError);
+};
+
+const handleServerInternalError = (
+  response: AxiosResponse<ErrorResData>,
+  error: AxiosError<ErrorResData>
+) => {
+  const message =
+    response.status != serviceUnavailableStatusCode
+      ? SERVER_ERROR_MSG
+      : TEMP_SERVER_ERROR_MSG;
+  const serviceInternalError = new ServerInternalError(
+    message,
+    error.response,
+    error.request
+  );
+  return Promise.reject(serviceInternalError);
+};
+
+const handleClientRequestError = (
+  response: AxiosResponse<ErrorResData>,
+  error: AxiosError<ErrorResData>
+) => {
+  const errorMsg = response.data.error.message ?? CLIENT_ERROR_MSG;
+  const errorCode = response.data.error.code ?? 0;
+  const clientRequestError = new ClientRequestError(
+    errorMsg,
+    errorCode,
+    error.response,
+    error.request
+  );
+  return Promise.reject(clientRequestError);
+};
+
+const unhandledError = (error: Error) => {
+  const unhandledError = new Shared.Errors.UnknownError(error.message);
+  return Promise.reject(unhandledError);
+};
+
+axios.interceptors.response.use(
+  (res) => res,
+  //Error - unhandledError
+  //AxiosError - AxiosError
+  (error: Error | AxiosError) => {
+    if (isAxiosError<ErrorResData>(error)) {
+      const response = error.response;
+      //response 없을 경우(네트워크 에러)
+      if (!response) {
+        return handleNetworkError(error);
+      }
+      //5xx대 에러 핸들링
+      if (error.response && server5xxStatusCode <= error.response.status) {
+        return handleServerInternalError(response, error);
+      }
+      //4xx대 에러 핸들링
+      if (error.response && client4xxStatusCode <= error.response.status) {
+        return handleClientRequestError(response, error);
+      }
+    }
+    //Unknown 에러 핸들링
+    return unhandledError(error);
+  }
+);
+```
+
+다음 글에서는 Fetch & Axios Error Handling로 마무리를 지어보려한다.
