@@ -1,6 +1,8 @@
 import rehypePrism from "@mapbox/rehype-prism";
 import nextMDX from "@next/mdx";
 import remarkGfm from "remark-gfm";
+import images from "remark-images";
+import emoji from "remark-emoji";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,7 +12,7 @@ const nextConfig = {
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, images, emoji],
     rehypePlugins: [rehypePrism],
   },
 });
