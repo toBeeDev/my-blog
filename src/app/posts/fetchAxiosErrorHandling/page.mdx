@@ -63,20 +63,27 @@ export default (props) => <ArticleLayout article={article} {...props} />;
 - 기존
   5xx에 대한 인스턴스를 생성하였으며, 조건문을 통해 500대 에러에 대한 별도의 에러 로깅이 이루어지고 있었던 상황 - 기존 코드
 
-  ````tsx
-  const handleServerInternalError = (response: AxiosResponse<ErrorResData>, error: AxiosError<ErrorResData>) => {
-  const message = response.status != serviceUnavailableStatusCode ? SERVER_ERROR_MSG : TEMP_SERVER_ERROR_MSG
-  const serviceInternalError = new ServerInternalError(message, error.response, error.request)
-  window.Rollbar?.error(serviceInternalError, error, serviceInternalError)
-  return Promise.reject(serviceInternalError)
+  ```tsx
+  const handleServerInternalError = (
+    response: AxiosResponse<ErrorResData>,
+    error: AxiosError<ErrorResData>
+  ) => {
+    const message =
+      response.status != serviceUnavailableStatusCode
+        ? SERVER_ERROR_MSG
+        : TEMP_SERVER_ERROR_MSG;
+    const serviceInternalError = new ServerInternalError(
+      message,
+      error.response,
+      error.request
+    );
+    window.Rollbar?.error(serviceInternalError, error, serviceInternalError);
+    return Promise.reject(serviceInternalError);
+  };
+  if (error.response && server5xxStatusCode <= error.response.status) {
+    return handleServerInternalError(response, error);
   }
-
-          if (error.response && server5xxStatusCode <= error.response.status) {
-                  return handleServerInternalError(response, error)
-                }
-          ```
-
-  ````
+  ```
 
 - 변경
   5xx에 대한 에러는 error.tsx에서 UnKnownError 로 처리되게 로직 수정. 5xx대 에러에 대한 테스트를 진행
@@ -114,9 +121,9 @@ export default (props) => <ArticleLayout article={article} {...props} />;
 - 변경
   notfound 페이지 이동 시 notFoundError 시 페이지 리다이렉트만 되고 롤바 로깅은 되지 않도록 로직 수정 및 테스트
   [isNotFoundError()](https://github.com/vercel/next.js/blob/056b675bd94370e35ca91b8a08ad22bc63714c1b/packages/next/src/client/components/not-found.ts#L23) - 테스트 코드
-  `tsx
-//index.tsx (각 서버컴포넌트)
-} catch (err: unknown) {
+
+  ```tsx
+  catch (err: unknown) {
     if (isNotFoundError(err)) {
       return notFound()
     } else if (err instanceof ClientRequestError) {
@@ -125,7 +132,7 @@ export default (props) => <ArticleLayout article={article} {...props} />;
       throw err
     }
   }
-`
+  ```
 
 ---
 
@@ -133,11 +140,12 @@ export default (props) => <ArticleLayout article={article} {...props} />;
 
 - 기존
   5xx 전체에 대한 에러를 ServerInternalError instance를 통해 에러로깅 - 기존코드
-  `jsx
-if (res.status >= 500) {
+
+  ```jsx
+  if (res.status >= 500) {
     rollbar.error(res)
     throw new ServerInternalError(JSON.parse(await res.text()).error.message)
-`
+  ```
 
 - 변경
   500에러에 대한 에러와 header의 contentType이 json형식 조건문을 통해 ServerInternalError와 UnExpectedServerError 로 구분지어 에러로깅을 진행
