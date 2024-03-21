@@ -1,0 +1,152 @@
+import ArticleLayout from "@/components/ArticleLayout";
+
+export const article = {
+  author: "Chan",
+  date: "2024-03-21",
+  title: "📜 Infinite Pagination with Tanstack Query",
+  description:
+    "Infinite Scroll을 Tanstack Query를 활용할 수 있다면 얼마나 좋을까?에서 시작된 간단한 기능 구현 글",
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+<aside>
+💡 언제가는 사용하게 될, Infinite Scroll을 React Query를 활용할 수 있다면 얼마나 좋을까?에서 시작된 간단한 기능 구현
+
+</aside>
+
+## Setup
+
+```tsx
+npx create-react-app infinite --template typescript
+//
+npm i @tanstack/react-query
+//
+npm i react-intersection-observer
+```
+
+```tsx
+//App.tsx
+import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+//queryClient 전역설정
+const queryClient = new QueryClient();
+
+root.render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>
+);
+```
+
+Infinite Scroll 구현을 위한 임의이 item 생성을 위한 함수
+
+[Array.from() - JavaScript | MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/from#화살표_함수와_array.from_사용하기)
+
+```tsx
+//api/items.ts
+const items = Array.from({ length: 100 }).map((_, i) => ({
+  id: i,
+  name: `Item ${i}`,
+}));
+
+type Item = (typeof items)[0];
+
+type Items = {
+  data: Item[];
+  currentPage: number;
+  nextPage: number | null;
+};
+
+const LIMIT = 10;
+
+export function fetchItems({
+  pageParam,
+}: {
+  pageParam: number;
+}): Promise<Items> {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      if (pageParam < 0) {
+        rej("Invalid page parameter");
+      }
+      res({
+        data: items.slice(pageParam, pageParam + LIMIT),
+        currentPage: pageParam,
+        nextPage: pageParam + LIMIT < items.length ? pageParam + LIMIT : null,
+      });
+    }, 1000);
+  });
+}
+```
+
+```tsx
+//App.tsx
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import { fetchItems } from "./api/items";
+import { useEffect } from "react";
+
+function App() {
+  const { data, status, error, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      //데이터 식별을 위한 키 설정
+      queryKey: ["items"],
+      //페이지네이션을 위한 api함수
+      queryFn: fetchItems,
+      //초기 페이지 state
+      initialPageParam: 0,
+      //다음 페이지를 가져오긴 위한 함수
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
+
+  //ref - 감지할 요소
+  //inView - 요소 화면에 보여지는 여부
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  return status === "pending" ? (
+    <div>Loading ...</div>
+  ) : status === "error" ? (
+    <div>{error.message}</div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      {data.pages.map((item) => {
+        return (
+          <div key={item.currentPage}>
+            {item.data.map((item) => {
+              return (
+                <div key={item.id} className="p-4 rounded-md bg-grayscale-700">
+                  {item.name}
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+      <div ref={ref}>{isFetchingNextPage && "Fetching~~~"}</div>
+    </div>
+  );
+}
+
+export default App;
+```
