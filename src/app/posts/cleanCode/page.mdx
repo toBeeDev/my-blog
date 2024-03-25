@@ -1,0 +1,44 @@
+import ArticleLayout from "@/components/ArticleLayout";
+import photo1 from "./photo1.jpg";
+
+export const article = {
+  author: "Chan",
+  date: "2024-03-25",
+  title: "🤥 Clean Code는 왜 중요하고 어떻게 실천해야할까?",
+  description:
+    "Infinite Scroll을 Tanstack Query를 활용할 수 있다면 얼마나 좋을까?에서 시작된 간단한 기능 구현 글",
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## Clean Code란?
+
+소프트웨어 개발에서 사용 되는 개념으로, 읽기 쉽고 이해하기 쉬운 코드를 작성하는 것
+
+클린 코드는 프로그램의 동작을 보장하는 것뿐만 아니라, 코드 자체가 가독성이 뛰어나고 유지 보수가 쉽도록 작성되어야 한다는 원칙을 가짐
+
+## Clean Code가 중요한 이유?
+
+<Image src={photo1} />
+
+출처: https://www.oreilly.com/library/view/the-agile-samurai/9781680500066/f_0091.html
+
+간결하고 명확한 클린 코드는 버그를 찾기 쉽게 만들어 줍니다. 반면 복잡하고 난해한 코드는 오류가 발생하기 쉽고, 발견한 후에도 수정이 어려울 수 있습니다. 또한 가독성이 높고 유지 보수가 용이한 코드는 개발 속도를 향상시킨다. 코드를 이해하고 수정하는데 걸리는 시간이 줄기에 새로운 기능을 빠르게 구현하고 배포할 수 있습니다.
+
+즉, 클린 코드는 프로젝트 성공에 기여하는 중요한 가치를 가지고 있다.
+
+## Clean Code의 주요 원칙
+
+1. 의미 있는 변수와 함수 사용하기
+2. 가독성 좋은 코드 만들기
+3. 주석을 필요할 때만 잘 활용하기
+4. 간결한 코드 유지하기
+5. 모듈화 수행하기
+6. 테스트 가능한 코드 만들기
+
+코드를 통한 원칙은 [이곳](https://738.github.io/clean-code-typescript/)에서 확인하기
