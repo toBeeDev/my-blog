@@ -1,0 +1,51 @@
+import ArticleLayout from "@/components/ArticleLayout";
+export const article = {
+  author: "Chan",
+  date: "2024-03-28",
+  title: "🎲 변수",
+  description: `변수에 대한 기초 정리 글`,
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+> 💡 자바스크립트 정리
+
+# 변수의 생성 과정
+
+1. 선언 단계
+2. 초기화 단계 // undefined 할당 해주는 단계
+3. 할당 단계
+
+## var (function scoped)
+
+선언 및 초기화 단계 ⇒ 할당 단계
+한번 선언된 변수를 재 선언 가능
+
+- 선언하기 전에 사용 가능
+  - 선언은 호이스팅(Hoisting)되지만, 할당(값)은 호이스팅 되지 않음
+
+## let (block scoped)
+
+- 선언 단계 ⇒ 초기화 단계 ⇒ 할당 단계
+- 한번 선언한 변수 재 선언 불가능
+
+## const (block scoped)
+
+- 선언 + 초기화 + 할당 동시에 일어남
+
+> 블록 스코프(block scoped)
+
+모든 코드 블록에서 선언된 변수는 코드 블록 내부에서만 사용할 수 있음 ex) 함수, if 문, for 문, while 문, try / catch 문 등
+
+## 호이스팅(Hoisting)
+
+- 스코프 내부 어디서든 변수 선언을 최상위에 선언된 것 처럼 행동
+- 스코프 단위로 일어남
+- Temporal Dead Zone(TDZ)
+  - let과 const는 TDZ의 영향을 받음
+  - 할당을 하기전에 사용 불가능
