@@ -1,5 +1,5 @@
 import React from "react";
-import logoModu from "@/img/logos/modu.svg";
+import socar from "@/img/logos/socar.png";
 import Image, { type ImageProps } from "next/image";
 import { FaBriefcase } from "react-icons/fa";
 import { Button } from "./Button";
@@ -27,7 +27,7 @@ const Role = ({ role }: { role: Role }) => {
         <Image
           src={role.logo}
           alt="roleImage"
-          className="h-7 w-7"
+          className="h-full w-full rounded-full"
           unoptimized
         />
       </div>
@@ -52,9 +52,9 @@ const Role = ({ role }: { role: Role }) => {
 const Resume = () => {
   let resume: Array<Role> = [
     {
-      company: "모두의주차장(SOCAR)",
+      company: "SOCAR",
       title: "Frontend Developer",
-      logo: logoModu,
+      logo: socar,
       start: "2022",
       end: {
         label: "현재",

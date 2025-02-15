@@ -1,5 +1,6 @@
 import { Card } from "@/components/Card";
 import Container from "@/components/Container";
+import GithubChart from "@/components/GithubChart";
 import Hero from "@/components/Hero";
 import Newsletter from "@/components/Newsletter";
 import Photos from "@/components/Photos";
@@ -23,8 +24,7 @@ export default async function Home() {
   return (
     <main>
       <Hero />
-      <Photos />
-      <Container className="mt-24 md:mt-28">
+      <Container className="mt-10 md:mt-14">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
             {articles.map((article) => (
@@ -32,6 +32,7 @@ export default async function Home() {
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
+            <GithubChart githubId="toBeeDev" />
             <Newsletter />
             <Resume />
           </div>

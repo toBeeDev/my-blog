@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../style/globals.css";
+import "@/style/globals.css";
 import Layout from "@/components/Layout";
 import Providers from "./provider";
+import { Work_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const work_Sans = Work_Sans({
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Chan.Logs",
-  description: "찬의 개발일지",
+  title: "B.log",
+  description: "BEE의 블로그",
 };
 
 export default function RootLayout({
@@ -18,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={(inter.className, `bg-white  dark:bg-zinc-900`)}>
+      <body className={(work_Sans.className, `bg-white  dark:bg-zinc-900`)}>
         <Providers>
           <div className="flex w-full h-[100dvh] overflow-x-hidden">
             <Layout>{children}</Layout>
