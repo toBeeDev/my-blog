@@ -73,7 +73,12 @@ const Resume = () => {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
+      <Button
+        href="/이력서.pdf"
+        variant="secondary"
+        target="_blank"
+        className="group mt-6 w-full"
+      >
         이력서 보기 📂
       </Button>
     </div>
