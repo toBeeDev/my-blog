@@ -4,7 +4,7 @@ import { Button } from "./Button";
 const NewsLetter = () => {
   return (
     <form
-      action="mailto:devaaronn@gmail.com"
+      action="mailto:bee.devlog@gmail.com"
       className="rounded-2xl border border-sky-200 p-6 dark:border-sky-700/40"
     >
       <h2 className="flex text-sm font-semibold text-sky-900 dark:text-sky-100">
