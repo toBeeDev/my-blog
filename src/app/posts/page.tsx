@@ -36,7 +36,7 @@ const ArticlePage = async () => {
   return (
     <SimpleLayout
       title="Dev Diary"
-      intro="최신 기술 탐구부터 성능 최적화 비법까지, 프론트엔드 개발의 모든 것을 담은 나만의 학습 일지. 여러분의 개발 여정에 영감과 실질적인 도움을 주기 위해, 제 경험과 통찰을 공유합니다"
+      intro="제가 개발하며 배우고 경험한 것들을 기록한 공간입니다. 프로젝트에서 마주한 고민, 해결 과정, 그리고 얻은 인사이트를 정리한 공간입니다."
     >
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
         <div className="flex max-w-3xl flex-col space-y-16">
