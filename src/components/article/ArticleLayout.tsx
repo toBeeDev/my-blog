@@ -1,12 +1,12 @@
 "use client";
 import React, { useContext } from "react";
-import Container from "./Container";
 import { ArticleWithSlug } from "@/lib/article";
 import { useRouter } from "next/navigation";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { formatDate } from "@/lib/formateDate";
-import { Prose } from "./Prose";
 import { AppContext } from "@/app/provider";
+import Container from "../Container";
+import { Prose } from "../Prose";
 
 function ArrowLeftIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (
