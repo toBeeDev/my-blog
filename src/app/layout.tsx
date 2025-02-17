@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/style/globals.css";
-import Layout from "@/components/Layout";
+import Layout from "@/shared/components/layout/Layout";
 import Providers from "./provider";
 import { Work_Sans } from "next/font/google";
 
