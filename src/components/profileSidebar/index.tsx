@@ -4,11 +4,11 @@ import CareerInfo from "@/components/profileSidebar/CareerInfo";
 
 const ProfileSidebar = () => {
   return (
-    <div className="space-y-10 lg:pl-16 xl:pl-24">
+    <aside className="space-y-10 lg:pl-16 xl:pl-24">
       <GithubChart githubId="toBeeDev" />
       <Newsletter />
       <CareerInfo />
-    </div>
+    </aside>
   );
 };
 

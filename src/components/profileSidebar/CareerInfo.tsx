@@ -1,6 +1,6 @@
 import React from "react";
 import { FaBriefcase } from "react-icons/fa";
-import { Button } from "@/components/Button";
+import { Button } from "@/shared/components/common/Button";
 import Company from "@/components/profileSidebar/Company";
 
 const CareerInfo = () => {

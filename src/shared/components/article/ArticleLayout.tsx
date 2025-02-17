@@ -4,8 +4,8 @@ import { ArticleWithSlug } from "@/lib/article";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/formateDate";
 import { AppContext } from "@/app/provider";
-import Container from "@/components/Container";
-import { Prose } from "@/components/Prose";
+import Container from "@/shared/components/layout/Container";
+import { Prose } from "@/shared/components/article/Prose";
 import Icons from "@/shared/Icons";
 
 const ArticleLayout = ({

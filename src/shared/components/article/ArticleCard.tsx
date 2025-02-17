@@ -1,5 +1,5 @@
 import { formatDate } from "@/lib/formateDate";
-import { Card } from "@/components/Card";
+import { Card } from "@/shared/components/common/Card";
 import { ArticleWithSlug } from "@/lib/article";
 
 const ArticleCard = ({ article }: { article: ArticleWithSlug }) => {

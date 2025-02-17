@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { Popover, Transition } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa";
-import ThemeButton from "@/components/ThemeButton";
+import ThemeButton from "@/shared/components/common/ThemeButton";
 
 const NavItem = ({
   href,

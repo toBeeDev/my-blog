@@ -1,8 +1,8 @@
-import SimpleLayout from "@/components/SimpleLayout";
+import SimpleLayout from "@/shared/components/layout/SimpleLayout";
 import React from "react";
 import blogLogo from "@/img/logos/dark.svg";
 import { type Metadata } from "next";
-import { Card } from "@/components/Card";
+import { Card } from "@/shared/components/common/Card";
 import Image from "next/image";
 import { GoLink } from "react-icons/go";
 
