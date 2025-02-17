@@ -49,7 +49,6 @@ const ProjectPage = () => {
       title="Project Canvas"
       intro="제가 만든 프로젝트들을 한눈에 볼 수 있는 공간입니다. 창의적인 아이디어와 최신 기술을 활용해 개발한 작업물들을 만나보세요!"
     >
-      {/* <EmptyContent /> */}
       <ul
         role="list"
         className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
