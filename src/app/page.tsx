@@ -1,10 +1,7 @@
 import { Card } from "@/components/Card";
 import Container from "@/components/Container";
-import GithubChart from "@/components/GithubChart";
 import Hero from "@/components/Hero";
-import Newsletter from "@/components/Newsletter";
-import Photos from "@/components/Photos";
-import Resume from "@/components/Resume";
+import ProfileSidebar from "@/components/profileSidebar";
 import { ArticleWithSlug, getAllArticles } from "@/lib/article";
 import { formatDate } from "@/lib/formateDate";
 
@@ -31,11 +28,7 @@ export default async function Home() {
               <Article key={article.slug} article={article} />
             ))}
           </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <GithubChart githubId="toBeeDev" />
-            <Newsletter />
-            <Resume />
-          </div>
+          <ProfileSidebar />
         </div>
       </Container>
     </main>
