@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Container from "../shared/components/layout/Container";
+import Container from "@/shared/components/layout/Container";
 import me from "@/img/me.jpg";
 
 const Hero = () => {
