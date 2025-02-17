@@ -1,5 +1,5 @@
 import { IoMdMailUnread } from "react-icons/io";
-import { Button } from "./Button";
+import { Button } from "@/shared/components/common/Button";
 
 const NewsLetter = () => {
   return (

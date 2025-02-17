@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/shared/components/layout/Container";
 import React from "react";
 import me from "@/img/me.jpg";
 import Image from "next/image";

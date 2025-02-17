@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/shared/components/layout/Container";
 
 const NotFound = () => {
   return (

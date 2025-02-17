@@ -1,5 +1,5 @@
-import { Card } from "@/components/Card";
-import SimpleLayout from "@/components/SimpleLayout";
+import { Card } from "@/shared/components/common/Card";
+import SimpleLayout from "@/shared/components/layout/SimpleLayout";
 import { ArticleWithSlug, getAllArticles } from "@/lib/article";
 import { formatDate } from "@/lib/formateDate";
 import React from "react";
@@ -18,7 +18,7 @@ const Article = ({ article }: { article: ArticleWithSlug }) => {
           {formatDate(article.date)}
         </Card.Eyebrow>
         <Card.Description>{article.description}</Card.Description>
-        <Card.Cta>Read article</Card.Cta>
+        <Card.Cta>자세히 보기</Card.Cta>
       </Card>
       <Card.Eyebrow
         as="time"
