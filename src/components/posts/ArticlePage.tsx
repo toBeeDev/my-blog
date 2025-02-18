@@ -28,10 +28,10 @@ const ArticlePage = ({ articles }: { articles: ArticleWithSlug[] }) => {
       <div className="flex md:ml-6 justify-end max-w-[790px] mb-10 py-4">
         <input
           type="text"
-          placeholder="검색..."
+          placeholder="검색어를 입력하세요"
           value={search}
           onChange={handleSearchChange}
-          className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white"
+          className="py-2 pl-2 pr-6 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white focus:outline-none"
         />
       </div>
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
