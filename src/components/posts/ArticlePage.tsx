@@ -1,14 +1,23 @@
 "use client";
 import { ArticleWithSlug } from "@/lib/article";
 import SimpleLayout from "@/shared/components/layout/SimpleLayout";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Article from "@/components/posts/Article";
 
 const ArticlePage = ({ articles }: { articles: ArticleWithSlug[] }) => {
   const [search, setSearch] = useState("");
 
-  const filteredArticles = articles.filter((article) =>
-    article.title.toLowerCase().includes(search.toLowerCase())
+  const filteredArticles = useMemo(() => {
+    return articles.filter((article) =>
+      article.title.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [articles, search]);
+
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+    },
+    []
   );
 
   return (
@@ -16,12 +25,12 @@ const ArticlePage = ({ articles }: { articles: ArticleWithSlug[] }) => {
       title="Dev Diary"
       intro="제가 개발하며 배우고 경험한 것들을 기록한 공간입니다. 프로젝트에서 마주한 고민, 해결 과정, 그리고 얻은 인사이트를 정리한 공간입니다."
     >
-      <div className="flex md:ml-6  justify-end max-w-3xl mb-10 py-4">
+      <div className="flex md:ml-6 justify-end max-w-[790px] mb-10 py-4">
         <input
           type="text"
           placeholder="검색..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearchChange}
           className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white"
         />
       </div>
