@@ -21,27 +21,15 @@ const ProjectPage = () => {
         label: "B.log",
       },
       logo: blogLogo,
+      stack: ["Next.js", "tailwindcss", "TypeScript"],
     },
     {
       name: "KiKi",
       description: "Socket.io 기반의 실시간 채팅 웹앱",
       link: { href: "https://github.com/toBeeDev/chat-app", label: "KiKi" },
       logo: "https://img.icons8.com/flat-round/50/filled-chat.png",
+      stack: ["React", "Socket.io", "JavaScript"],
     },
-    // {
-    //   name: "cosmOS",
-    //   description:
-    //     "The operating system that powers our Planetaria space shuttles.",
-    //   link: { href: "#", label: "github.com" },
-    //   logo: logoCosmos,
-    // },
-    // {
-    //   name: "OpenShuttle",
-    //   description:
-    //     "The schematics for the first rocket I designed that successfully made it to orbit.",
-    //   link: { href: "#", label: "github.com" },
-    //   logo: logoOpenShuttle,
-    // },
   ];
   return (
     <SimpleLayout
@@ -69,6 +57,18 @@ const ProjectPage = () => {
               </Card.Link>
             </h2>
             <Card.Description>{project.description}</Card.Description>
+            {project.stack && (
+              <div className="mt-4 flex flex-wrap gap-2 static z-10">
+                {project.stack.map((tech, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2 py-1 bg-sky-100  dark:bg-sky-800/40 dark:text-sky-100 text-sky-800 rounded-md text-xs font-medium"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
             <p className="relative z-10 mt-6 flex items-center text-sm font-medium text-sky-400 transition group-hover:text-sky-500 dark:text-sky-100">
               <GoLink className="text-lg flex-none" />
               <span className="ml-2">{project.link.label}</span>
