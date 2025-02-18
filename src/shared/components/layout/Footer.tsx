@@ -14,7 +14,7 @@ const Footer = () => {
         </div>
       </div>
       <p className="text-sm text-sky-500 dark:text-sky-400">
-        &copy; {new Date().getFullYear()} Chan all rights reserved.
+        &copy; {new Date().getFullYear()} Bee all rights reserved.
       </p>
     </footer>
   );

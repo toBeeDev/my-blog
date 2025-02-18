@@ -7,7 +7,7 @@ const NewsLetter = () => {
       action="mailto:bee.devlog@gmail.com"
       className="rounded-2xl border border-sky-200 p-6 dark:border-sky-700/40"
     >
-      <h2 className="flex text-sm font-semibold text-sky-900 dark:text-sky-100">
+      <h2 className="flex items-center text-sm font-semibold text-sky-900 dark:text-sky-100">
         <IoMdMailUnread className="text-xl" />
         <span className="ml-3">Email</span>
       </h2>
