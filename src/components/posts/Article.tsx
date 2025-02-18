@@ -1,6 +1,7 @@
 import { ArticleWithSlug } from "@/lib/article";
 import { formatDate } from "@/lib/formateDate";
 import { Card } from "@/shared/components/common/Card";
+import { memo } from "react";
 
 const Article = ({ article }: { article: ArticleWithSlug }) => {
   return (
@@ -29,4 +30,4 @@ const Article = ({ article }: { article: ArticleWithSlug }) => {
   );
 };
 
-export default Article;
+export default memo(Article);
