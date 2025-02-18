@@ -22,13 +22,12 @@ const ProjectPage = () => {
       },
       logo: blogLogo,
     },
-    // {
-    //   name: "HelioStream",
-    //   description:
-    //     "Real-time video streaming library, optimized for interstellar transmission.",
-    //   link: { href: "#", label: "github.com" },
-    //   logo: logoHelioStream,
-    // },
+    {
+      name: "KiKi",
+      description: "Socket.io 기반의 실시간 채팅 웹앱",
+      link: { href: "https://github.com/toBeeDev/chat-app", label: "KiKi" },
+      logo: "https://img.icons8.com/flat-round/50/filled-chat.png",
+    },
     // {
     //   name: "cosmOS",
     //   description:
@@ -59,7 +58,8 @@ const ProjectPage = () => {
               <Image
                 src={project.logo}
                 alt="logo"
-                className="h-8 w-8"
+                width={32}
+                height={32}
                 unoptimized
               />
             </div>
