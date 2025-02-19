@@ -3,7 +3,6 @@ import "@/style/globals.css";
 import Layout from "@/shared/components/layout/Layout";
 import Providers from "./provider";
 import { Work_Sans } from "next/font/google";
-import blogLogo from "@/img/logos/dark.svg";
 
 const work_Sans = Work_Sans({
   subsets: ["latin"],
@@ -18,9 +17,10 @@ export const metadata: Metadata = {
     type: "website",
     siteName: `모두의주차장`,
     locale: "ko_KR",
-    images: blogLogo,
+    images: `${process.env.NEXT_PUBLIC_BASE_URL}/dark.svg`,
   },
 };
+console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
 export default function RootLayout({
   children,
