@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     images: `${process.env.NEXT_PUBLIC_BASE_URL}/dark.svg`,
   },
 };
-console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
 export default function RootLayout({
   children,
