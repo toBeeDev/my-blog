@@ -10,6 +10,7 @@ const work_Sans = Work_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
   title: "B.log",
   description: "BEE의 블로그",
   openGraph: {
@@ -21,7 +22,6 @@ export const metadata: Metadata = {
     images: `${process.env.NEXT_PUBLIC_BASE_URL}/dark.svg`,
   },
 };
-console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
 export default function RootLayout({
   children,
