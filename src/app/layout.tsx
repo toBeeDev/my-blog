@@ -3,12 +3,14 @@ import "@/style/globals.css";
 import Layout from "@/shared/components/layout/Layout";
 import Providers from "./provider";
 import { Work_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const work_Sans = Work_Sans({
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
   title: "B.log",
   description: "BEE의 블로그",
   openGraph: {
@@ -20,7 +22,6 @@ export const metadata: Metadata = {
     images: `${process.env.NEXT_PUBLIC_BASE_URL}/dark.svg`,
   },
 };
-console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
 export default function RootLayout({
   children,
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={(work_Sans.className, `bg-white  dark:bg-zinc-900`)}>
+        <Analytics />
         <Providers>
           <div className="flex w-full h-[100dvh] overflow-x-hidden">
             <Layout>{children}</Layout>
