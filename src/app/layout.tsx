@@ -3,6 +3,7 @@ import "@/style/globals.css";
 import Layout from "@/shared/components/layout/Layout";
 import Providers from "./provider";
 import { Work_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const work_Sans = Work_Sans({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={(work_Sans.className, `bg-white  dark:bg-zinc-900`)}>
+        <Analytics />
         <Providers>
           <div className="flex w-full h-[100dvh] overflow-x-hidden">
             <Layout>{children}</Layout>
