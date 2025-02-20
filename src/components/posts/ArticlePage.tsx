@@ -3,15 +3,18 @@ import { ArticleWithSlug } from "@/lib/article";
 import SimpleLayout from "@/shared/components/layout/SimpleLayout";
 import { useCallback, useMemo, useState } from "react";
 import Article from "@/components/posts/Article";
+import useDebounce from "@/hooks/useDebounce";
+import EmptyContent from "@/shared/components/layout/EmptyContent";
 
 const ArticlePage = ({ articles }: { articles: ArticleWithSlug[] }) => {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
 
   const filteredArticles = useMemo(() => {
     return articles.filter((article) =>
-      article.title.toLowerCase().includes(search.toLowerCase())
+      article.title.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
-  }, [articles, search]);
+  }, [articles, debouncedSearch]);
 
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +39,13 @@ const ArticlePage = ({ articles }: { articles: ArticleWithSlug[] }) => {
       </div>
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
         <div className="flex max-w-3xl flex-col space-y-16 ">
-          {filteredArticles.map((article) => (
-            <Article key={article.slug} article={article} />
-          ))}
+          {filteredArticles.length === 0 && search.length > 0 ? (
+            <EmptyContent text="검색결과가 없습니다" />
+          ) : (
+            filteredArticles.map((article) => (
+              <Article key={article.slug} article={article} />
+            ))
+          )}
         </div>
       </div>
     </SimpleLayout>
