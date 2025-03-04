@@ -1,0 +1,102 @@
+import ArticleLayout from "@/shared/components/article/ArticleLayout";
+import photo1 from "./1.png";
+
+export const article = {
+  author: "Bee",
+  date: "2025-02-18",
+  title: "✅ Github SSH 설정하기",
+  description: "Github SSH 설정을 진행하는 방법에 대해 정리한 글",
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## Why?
+
+새로운 프로젝트 세팅을 하는데 있어 git config 설정부터 다시 진행해야 하는 문제가 생겼다!
+
+## SSH key 생성 여부 확인하기
+
+```bash
+ls -al ~/.ssh
+```
+
+- 위 명령으로 이미 생성된 ssh 키가 존재하는지 확인할 수 있다.
+- 디렉토리에 아무것도 존재하지 않거나 혹은 새로운 ssh 키를 생성하고자 한다면 다음 과정을 따라가자.
+
+## ssh-keygen 생성하기
+
+```tsx
+ssh-keygen -t ed25519 -C "your@gmail.com"
+```
+
+- 위 명령과 같이 github에 등록된 자신의 메일 계정을 추가한 ssh key 를 생성한다.
+- ssh key 는 ssh-keygen 을 이용한다.
+- t 옵션을 통해서 rsa, dsa, ECDSA, EdDSA 등 옵션이 올수 있다. 여기서는 ed25519 키 암호화 방식을 이용한다.
+- ed25519 는 최신의 암호화 방식이므로 동작하지 않는다면 rsa를 다음과 같이 이용할 수 있다.
+
+```tsx
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+<Image src={photo1} />
+
+## ssh-agent 에 키 등록하기
+
+- ssh-agent에 등록하기 위해 키를 생성
+- ssh-add 명령으로 키를 에이전트에 등록할 수 있다.
+
+```tsx
+eval "$(ssh-agent -s)”
+```
+
+## config 파일 설정하기
+
+- ~/.ssh/config 파일에 다음 내용을 추가한다.
+
+```tsx
+vi ~/.ssh/config 후
+a(INSERT)를 통해 하단 복붙
+
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+
+esc 후 :wq 저장하고 끔
+```
+
+## **ssh-agent 에 ssh 개인키 추가**
+
+```tsx
+ssh-add -K ~/.ssh/id_******
+Identity added: /Users/admin/.ssh/id_****** (your@gmail.com)
+```
+
+- 위와 같이 정상적으로 등록 되었음을 확인 할 수 있다.
+
+## **ssh_key 복사**
+
+```
+pbcopy < ~/.ssh/id_******.pub
+```
+
+Github 의 New SSH keys에 가서 등록해주면 완료!
+
+## 테스트하기
+
+```
+ssh -T git@github.com
+
+> The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+> RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+> Are you sure you want to continue connecting (yes/no)? yes <-- 입력하고 엔터
+
+Hi schooldevops! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+이제 SSH 로 Push를 진행해보자!
