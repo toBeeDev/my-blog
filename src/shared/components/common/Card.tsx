@@ -1,6 +1,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 import Icons from "@/shared/Icons";
+import { ArticleWithSlug } from "@/lib/article";
 export function Card<T extends React.ElementType = "div">({
   as,
   className,
@@ -107,5 +108,20 @@ Card.Eyebrow = function CardEyebrow<T extends React.ElementType = "p">({
       )}
       {children}
     </Component>
+  );
+};
+
+Card.Tags = function CardTags({ tags }: { tags: ArticleWithSlug["tags"] }) {
+  return (
+    <div className="flex flex-wrap gap-1 mt-2">
+      {tags.map((tag, idx) => (
+        <span
+          key={idx}
+          className="px-2 py-1 z-10 bg-sky-100 dark:bg-sky-800/40 rounded-md text-xs font-medium"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
   );
 };
