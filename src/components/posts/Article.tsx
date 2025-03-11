@@ -17,6 +17,7 @@ const Article = ({ article }: { article: ArticleWithSlug }) => {
           {formatDate(article.date)}
         </Card.Eyebrow>
         <Card.Description>{article.description}</Card.Description>
+        <Card.Tags tags={article.tags} />
         <Card.Cta>자세히 보기</Card.Cta>
       </Card>
       <Card.Eyebrow
