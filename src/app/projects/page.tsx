@@ -39,7 +39,7 @@ const ProjectPage = () => {
     },
     {
       name: "WishBunny",
-      description: "Next.js를 활용한 반응형 웹",
+      description: "Next.js를 활용한 이커머스 반응형웹",
       link: { href: "https://github.com/toBeeDev/wb", label: "WishBunny" },
       logo: "/wishbunny.png",
       stack: ["Next.js", "Typescript"],
