@@ -1,0 +1,132 @@
+import ArticleLayout from "@/shared/components/article/ArticleLayout";
+import photo1 from "./1.png";
+
+export const article = {
+  author: "Bee",
+  date: "2025-02-25",
+  title: "🔒 클로저(Closures)",
+  description: "💡 클로저에 대한 이해도를 높이기 위한 정리글",
+  tags: ["Javascript"],
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+<h2 className="text-4xl font-bold"> ⚠️ Why</h2>
+
+<aside>💡 클로저에 대한 이해도를 높이기 위해</aside>
+
+<h2 className="text-4xl font-bold"> 🗝️ Key Point</h2>
+
+- 자바스크립트에서 왜 중요한지
+- 어떻게 사용되고 있는지
+
+<h2 className="text-4xl font-bold"> 👨🏻‍💻 **Summarization**</h2>
+
+```tsx
+function countWithoutClosure(){
+	let count = 0;
+	return count;
+}
+
+console.log(countWithoutClosure(); //0
+console.log(count); //ReferenceError: count is not defined
+```
+
+함수의 return 값은 잘 출력되지만, 함수 내부의 변수 참조는 불가능하다. 자바스크립트가 렉시컬 스코프 규칙을 따르기에
+
+<aside>💡 함수 안에서 선언한 변수는 함수 안에서만 접근이 가능하다는 규칙</aside>
+
+## 함수 실행 순서
+
+1. `countWithoutClosure()` 호출
+2. 함수 내부에 선언된 변수 (count) 는 메모리 상에 올라가게됨
+3. 함수 실행 종료 시(return), 가비지 콜렉터는 이 변수가 필요없다 판단하고, 메모리 상에서 제거
+
+- 변수에 접근이 가능하려면, 변수가 메모리상에 존재해야하는데 함수 바깥에서는 이미 이 변수가 제거된 상태
+
+## 어떻게 하면 변수에 접근할 수 있을까?
+
+### 전역변수 선언
+
+```tsx
+let count = 0;
+
+function increment() {
+  count++;
+  return count;
+}
+increment();
+console.log(count); //1
+```
+
+전역 변수는 애플리케이션이 실행되는 동안 메모리상에 항상 존재하기에 메모리 누수를 초래할 수 있고, 유지보수성 저하
+
+### 클로저 활용
+
+```tsx
+function countWithClosure() {
+  let count = 0;
+  return {
+    increase: function () {
+      count++;
+      return count;
+    },
+    decrease: function () {
+      count--;
+      return count;
+    },
+    getCount: function () {
+      return count;
+    },
+  };
+}
+
+//위의 클로저 함수를 활용
+const counter = countWithClosure();
+console.log(counter.getCount()); //0
+counter.increase();
+console.log(counter.getCount()); //1
+counter.decrease();
+console.log(counter.getCount()); //0
+```
+
+<details>
+  <summary>왜 함수안에서 또 함수를 return 하는가?</summary>
+  <ul className="flex flex-col items-center">
+    <li>
+      앞의 `countWithoutClosure()` 와 `countWithClosure()` 의 차이는 함수를
+      return하느냐 아니냐의 차이가 존재하며, `increment, decrement, getCount`
+      함수는 상위 스코프 즉, `countWithClosure()` 스코프에 count가 존재하지
+      않는다면 실행되지 못하기에 함수 실행에 필수적인 상위 스코프도 함께
+      메모리로 가져옴
+    </li>
+<Image src={photo1} width="500"/>
+
+  </ul>
+</details>
+
+<details>
+  <summary>클로저 함수를 호출해서 꼭 변수에 할당해야 하는가?</summary>
+  <ul>
+    <li>
+      클로저를 호출하지 않고, 바로 함수를 실행하면 메모리에서 제거되기에 변수에
+      할당해야 한다.
+    </li>
+    <li>
+      클로저를 활용한 함수는 메모리에서 제거되지 않기에, 필요할 때마다 호출
+      가능하다.
+    </li>
+  </ul>
+</details>
+
+---
+
+<h2 className="text-4xl font-bold"> 🔗 Reference</h2>
+
+- [MDN - Closures](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures)
+- [Youtube - Closures](https://www.youtube.com/watch?v=DjpG-uz-gMc)
