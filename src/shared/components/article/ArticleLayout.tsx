@@ -45,7 +45,10 @@ const ArticleLayout = ({
                 <span className="ml-3">{formatDate(article.date)}</span>
               </time>
             </header>
-            <Prose className="mt-8" data-mdx-content>
+            <Prose
+              className="mt-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+              data-mdx-content
+            >
               {children}
             </Prose>
           </article>
