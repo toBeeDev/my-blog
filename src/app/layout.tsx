@@ -11,12 +11,12 @@ const work_Sans = Work_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
   title: "B.log",
-  description: "BEE의 블로그",
+  description: "Bee의 블로그",
   openGraph: {
     title: `B.log`,
-    description: "BEE의 블로그",
+    description: "Bee의 블로그",
     type: "website",
-    siteName: `모두의주차장`,
+    siteName: `Bee's Blog`,
     locale: "ko_KR",
     images: `${process.env.NEXT_PUBLIC_BASE_URL}/dark.svg`,
   },

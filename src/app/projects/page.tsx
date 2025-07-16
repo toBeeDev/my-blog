@@ -8,14 +8,14 @@ import { GoLink } from "react-icons/go";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "프론트엔드 개발자로서의 여정을 담아내는 BEE의 블로그",
+  description: "프론트엔드 개발자로서의 여정을 담아내는 Bee의 블로그",
 };
 
 const ProjectPage = () => {
   const projects = [
     {
       name: "B.log",
-      description: "프론트엔드 개발자로서의 여정을 담아내는 BEE의 블로그",
+      description: "프론트엔드 개발자로서의 여정을 담아내는 Bee의 블로그",
       link: {
         href: "https://github.com/toBeeDev/my-blog",
         label: "B.log",
