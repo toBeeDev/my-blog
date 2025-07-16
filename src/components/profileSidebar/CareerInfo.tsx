@@ -11,14 +11,14 @@ const CareerInfo = () => {
         <span className="ml-3">Work</span>
       </h2>
       <Company />
-      <Button
+      {/* <Button
         href="/이력서.pdf"
         variant="secondary"
         target="_blank"
         className="group mt-6 w-full"
       >
         이력서 보기 📂
-      </Button>
+      </Button> */}
     </aside>
   );
 };
