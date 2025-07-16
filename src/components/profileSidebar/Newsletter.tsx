@@ -21,7 +21,7 @@ const NewsLetter = () => {
           aria-label="이메일"
           required
           className="min-w-0 flex-auto appearance-none rounded-md border focus:outline-none
-           border-sky-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-sky-800/5 placeholder-sky-400 focus:border-sky-500"
+           border-sky-900/10 bg-white dark:text-sky-400 px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-sky-800/5 placeholder-sky-400 focus:border-sky-500"
         />
         <Button type="submit" className="ml-4 flex-none">
           전송하기
