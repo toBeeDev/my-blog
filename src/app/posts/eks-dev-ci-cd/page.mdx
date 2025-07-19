@@ -1,0 +1,72 @@
+import ArticleLayout from "@/shared/components/article/ArticleLayout";
+import MdxImage from "@/components/posts/MdxImage";
+
+export const article = {
+  author: "Bee",
+  date: "2025-07-11",
+  title: "[EKS Dev] 👨🏻‍💻 CI/CD 구조 정리",
+  description:
+    "기존 CI/CD 구조를 확인하고 EKS Dev 환경을 위한 CI/CD 구축을 위한 ASIS / TOBE에 대해 기록하는 글",
+  tags: ["Infra", "AWS", "CI/CD"],
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## 👀 개요
+
+<aside>
+  💡 기존 CI/CD 구조를 확인하고 EKS Dev 환경을 위한 CI/CD 구축을 위한 ASIS /
+  TOBE에 대해 기록하는 글
+</aside>
+
+## 🖥️ 작업사항
+
+### AS-IS
+
+- A 계정(AWS-Account)
+- 사용서비스
+  - CodePipeline + CodeBuild + S3 + CloudFront
+- CodeBuild에서 buildspec.yaml을 통해 빌드&배포 수행
+
+<h4 className="text-lg font-bold">Flow</h4>
+
+1. PR Merge on Github
+2. CodePipeline → CodeBuild 트리거
+3. CodeBuild가 빌드 수행 (buildspec.yaml 참조)
+4. 산출물 S3 업로드
+5. CloudFront로 배포
+
+<MdxImage src="/postImg/eks-dev-ci-cd-1.png" alt="AWS CodePipeline CI/CD" />
+
+S3 정적 웹 호스팅 기반 구조. 프론트엔드 빌드를 S3에 배포하고 CloudFront가 CDN 역할
+
+### TO-BE
+
+- B 계정으로 이전
+- CI/CD를 Github Actions로 전환
+- 기존 S3/CloudFront 기반을 → EKS 기반으로 전환
+- dev 환경 구축
+- ArgoCD로 쿠버네티스 배포 관리
+
+<h4 className="text-lg font-bold">Flow</h4>
+
+1. PR Merge on GitHub
+2. GitHub Actions
+   1. 애플리케이션 Docker 이미지로 빌드
+   2. 빌드된 이미지 AWS ECR에 푸시
+3. ArgoCD
+   1. GitOps 방식으로 Git 저장소를 모니터링
+   2. 즉, ArgoCD는 Git을 소스로 사용해 클러스터 상태를 동기화
+4. Amazon EKS
+   1. ArgoCD가 애플리케이션을 EKS 클러스터에 배포
+   2. 앱은 dev 네임스페이스 등에 Pod로 실행
+      1. Ingress → Service → Pod
+
+<MdxImage src="/postImg/eks-dev-ci-cd-2.png" alt="GitHub Actions CI/CD" />
+
+정적 배포 → 컨테이너 기반의 동적 서비스 전환을 의미
