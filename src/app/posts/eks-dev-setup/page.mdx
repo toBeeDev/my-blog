@@ -1,0 +1,55 @@
+import ArticleLayout from "@/shared/components/article/ArticleLayout";
+import MdxImage from "@/components/posts/MdxImage";
+
+export const article = {
+  author: "Bee",
+  date: "2025-07-18",
+  title: "[EKS Dev] 👨🏻‍💻 S3, CloudFront 이전하기",
+  description:
+    "EKS Dev 환경을 구축을 위해 기존 A계정에서 활용중이던, S3 + CloudFront 를 B계정에 구성하고 사용자가 A계정의 도메인으로 접근 시, B계정의 CloudFront와 S3 콘텐츠에 접근 가능한 구조로 세팅해보자",
+  tags: ["Infra", "AWS"],
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+## 👀 개요
+
+<aside>
+  💡 EKS Dev 환경을 구축을 위해 기존 A계정에서 활용중이던, S3 + CloudFront 를
+  B계정에 구성하고 사용자가 A계정의 도메인으로 접근 시, B계정의 CloudFront와 S3
+  콘텐츠에 접근 가능한 구조로 세팅해보자
+</aside>
+
+## 🖥️ 작업사항
+
+Github Actions 작성을 통한 CI/CD 구축 전에, 기존 AWS A계정에서 활용중이던 S3, CloudFront 이전작업을 진행
+
+<MdxImage src="/postImg/eks-dev-setup.png" alt="User Flow" />
+
+### S3 & CloudFront 구성하기
+
+기존 A 계정에서 사용하던 S3+CloudFront 구조를 B 계정에서 동일하게 생성하고 Route53 을 통해 도메인을 연결하기
+
+- A계정 (Route 53 도메인 보유)
+  - 도메인: [xxxdev.cloud](http://xxxdev.cloud)
+  - 서브도메인
+    하위 두 도메인에 대해 `CNAME` 레코드 유형 설정 - [xxxapp-cdn.xxxdev.cloud](http://xxxapp-cdn.xxxdev.cloud) - [xxxapp-dev.xxxdev.cloud](http://xxxapp-dev.xxxdev.cloud)
+    ⇒ 트래픽 라우팅 대상은 B 계정의 CloudFront 배포 도메인(xxxxxxxx.cloudfront.net)
+- B계정 (CloudFront + S3 보유)
+  - CloudFront 배포
+    - Alternate domain names 에 [xxxapp-cdn.xxxdev.cloud](http://xxxapp-cdn.xxxdev.cloud) 포함
+    - 와일드카드 인증서(\*.xxxdev.cloud) SSL 지원
+    - Orgin: S3 버킷 (xxxx-web-app-s3-dev)
+  - S3 버킷은 CloudFront 에서만 접근 가능하도록 버킷 정책 설정
+
+### User Flow
+
+1. 사용자가 브라우저에서 https://xxxapp-cdn.xxxxdev.cloud 로 접속
+2. DNS 요청이 A 계정의 Route 53에서 `CNAME` 레코드에 의해 [xxxxxxxx.cloudfront.net](http://xxxxxxxx.cloudfront.net) (B 계정의 Cloudfront) 로 리다이렉션됨
+3. CloudFront가 S3에서 정적 파일을 가져옴(CloudFront에만 허용된 접근)
+4. 사용자에게 정상적으로 웹페이지 제공됨
