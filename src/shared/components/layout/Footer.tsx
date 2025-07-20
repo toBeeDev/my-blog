@@ -8,7 +8,7 @@ const Footer = () => {
     >
       <div>
         <div className="flex flex-col md:flex-row justify-center gap-x-6 gap-y-1 text-sm font-medium text-sky-800 dark:text-sky-200">
-          <Link href={"/about"}>About</Link>
+          {/* <Link href={"/about"}>About</Link> */}
           <Link href={"/posts"}>Post</Link>
           <Link href={"/projects"}>Project</Link>
         </div>

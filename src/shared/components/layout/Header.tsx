@@ -42,7 +42,7 @@ const DesktopNavigation = (props: React.ComponentPropsWithRef<"nav">) => {
   return (
     <nav {...props}>
       <ul className="flex rounded-md px-3 text-md font-medium">
-        <NavItem href="/about">About</NavItem>
+        {/* <NavItem href="/about">About</NavItem> */}
         <NavItem href="/posts">Post</NavItem>
         <NavItem href="/projects">Project</NavItem>
       </ul>
@@ -112,7 +112,7 @@ const MobileNavigation = (
             </div>
             <nav className="mt-6">
               <ul className="-my-2 text-base text-sky-800 dark:divide-sky-100/5 dark:text-sky-300">
-                <MobileNavItem href="/about">About</MobileNavItem>
+                {/* <MobileNavItem href="/about">About</MobileNavItem> */}
                 <MobileNavItem href="/posts">Post</MobileNavItem>
                 <MobileNavItem href="/projects">Project</MobileNavItem>
               </ul>
